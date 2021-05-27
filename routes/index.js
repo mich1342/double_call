@@ -128,9 +128,9 @@ router.get('/movie/favorite/new', verifyToken, (req, res, next) =>{
                             console.log(currentPoster);
                             AllMovies = AllMovies + currentPoster + ', ';
                                 
-
+                            i++;
                         }).catch(console.error);
-                        i++;
+                        
                     } catch(err){
                         break;
                     }
