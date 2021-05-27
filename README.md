@@ -25,6 +25,8 @@ This project developed using:
    - mysql2 v2.2.5
    - pino v6.11.3
    - sequelize v6.6.2
+6. Dev Dependencies (optional but recomended):
+   - nodemon v2.0.7
    
 ## Installation
 1. Clone this repository into your local folder.
