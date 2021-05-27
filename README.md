@@ -15,9 +15,9 @@ It also features user-password login with bearer auth token. Each user can do:
 
 ## How to use
 1. run this command in the terminal
-'''bash
+```bash
 npm run dev
-'''
+```
 2. You should get information about which port the server is listening to.
 3. You can use postman app to make a api request.
 
