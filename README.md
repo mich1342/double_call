@@ -1,12 +1,31 @@
 # Double Call
 
-Double Call is an API server in Node Js that will return image url of movie posters using OMDb API to get the Poster url.
+Double Call is an API server in Node Js that will return the image URL of movie posters using OMDb API to get the Poster URL.
 
-It also features user-password login with bearer auth token. Each user can do:
-1. Login using bearer auth token with hashed password.
-2. Add their favourite movie to their own list.
-3. Fetch / get all of their own favorit movies poster url.
+It also features user-password login with a bearer auth token. Each user can do:
+1. Login using bearer auth token with a hashed password.
+2. Add their favorite movie to their own list.
+3. Fetch/get all of their own favorite movie poster URL.
 
+A non-user can do:
+1. Add/register as a new user.
+2. Get a specific movie title poster URL.
+
+This project developed using:
+1. MySql Database with Apache server (XAMPP v3.3.0)
+2. Node Js v14.17.0
+3. npm v6.14.13
+4. Visual Studio Code v1.56.2
+5. Dependencies:
+   - axios v0.21.1
+   - bcrypt v5.0.1
+   - dotenv v10.0.0
+   - express v8.5.1
+   - jsonwebtoken v8.5.1
+   - mysql2 v2.2.5
+   - pino v6.11.3
+   - sequelize v6.6.2
+   
 ## Installation
 1. Clone this repository into your local folder.
 2. Make sure you have all dependecies listedin the package.json file.
