@@ -92,31 +92,26 @@ router.get('/movie/favorite', verifyToken, (req, res, next) =>{
                 axios.all(currentLink.map(l => axios.get(l)))
                     .then(axios.spread(function(...out){
                         var j = 0;
-                        
+                        //console.log(out);
                         while(j>-1){
                             try{
                                 
                                 const currentResult = String(out[j].data.Response);
                                 if (currentResult === "False"){
                                     AllMovies+='Not Found,';
-                                    console.log(notFound);
+                                    
                                 } else{
-                                    Allmovies += String(out[j].data.Poster) + ', ';
-                                    console.log(out[j]);
+                                    AllMovies += String(out[j].data.Poster) + ', ';
                                 }
                                 
                             }
-                            catch{
+                            catch(err){
                                 break;
                             }
                             j++;
                         }
-
-                        //const finalAllMovies = AllMovies.slice(0,-1);
-                        console.log(AllMovies);
-
                         res.json({
-                            links:finalAllMovies
+                            links:AllMovies
                         }) 
                     }));
                 
