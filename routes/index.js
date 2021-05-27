@@ -44,7 +44,7 @@ router.get('/movies/:Title', (req,res,next) =>{
     //console.log(movieTitle);
     const newTitle = movieTitle.split(' ').join('+');
     //console.log(newTitle);
-    axios.get("https://www.omdbapi.com/?t="+ newTitle +"&apikey=2b70b0df")
+    axios.get("https://www.omdbapi.com/?t="+ newTitle +"&apikey=" + process.env.OMDB_AUTH)
         .then((response) => {
             console.log(response.data.Poster);
             res.send(response.data.Poster);
@@ -56,6 +56,7 @@ router.get('/movies/:Title', (req,res,next) =>{
 //Forbiden routes
 router.get('/movies', (req,res,next) =>{
     logger.info('Request Forbidden Routes', req);
+    console.log("https://www.omdbapi.com/?t="+ "AA" +"&apikey=" + process.env.OMDB_AUTH);
     res.sendStatus(403);
     logger.info('Result Forbidden Routes', res);
 });
@@ -76,7 +77,7 @@ router.get('/movie/favorite', verifyToken, (req, res, next) =>{
                         const currentTitle = favourite_movie[i].dataValues.title;
                         const currentTitleFormated = currentTitle.split(' ').join('+'); 
                         console.log(currentTitleFormated);
-                        currentLink.push("https://www.omdbapi.com/?t=" + currentTitleFormated + "&apikey=2b70b0df");
+                        currentLink.push("https://www.omdbapi.com/?t=" + currentTitleFormated + "&apikey=" + process.env.OMDB_AUTH);
                         console.log(currentLink);
                         axios.get(currentLink)
                         .then((response) => {
@@ -119,7 +120,7 @@ router.get('/movie/favorite/new', verifyToken, (req, res, next) =>{
                         const currentTitle = favourite_movie[i].dataValues.title;
                         const currentTitleFormated = currentTitle.split(' ').join('+'); 
                         console.log(currentTitleFormated);
-                        currentLink.push("https://www.omdbapi.com/?t=" + currentTitleFormated + "&apikey=2b70b0df");
+                        currentLink.push("https://www.omdbapi.com/?t=" + currentTitleFormated + "&apikey=" + process.env.OMDB_AUTH);
                         console.log(currentLink);
                         axios.get(currentLink)
                         .then((response) => {
@@ -148,7 +149,7 @@ router.get('/movie/favorite/new', verifyToken, (req, res, next) =>{
 
 
 router.get('/testTitle', (req,res,next) =>{
-    axios.get("https://www.omdbapi.com/?t=How&apikey=2b70b0df")
+    axios.get("https://www.omdbapi.com/?t=How&apikey=" + process.env.OMDB_AUTH)
         .then((response) => {
             console.log(response.data.Poster);
             res.send(response.data.Poster);
