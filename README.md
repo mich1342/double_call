@@ -33,7 +33,7 @@ This project developed using:
 2. Make sure you have all dependecies listedin the package.json file.
 3. Set all of the variable in the .env variable. Make sure the port you choose is free and you can get OMDB auth token at omdbapi.com or you can use my key (1000 request limit a month).
 4. Set your database parameters in the config.json file inside config folder (./config/config.json).
-
+5. You do not need to setup any table inside your database, the sequelize will automatically generate the table if it is not found.
 ## How to use
 1. run this command in the terminal
 ```bash
