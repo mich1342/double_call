@@ -98,10 +98,14 @@ Expected response:
 Forbiden
 
 #### Get('/movie/favorite')
-Used to get all current user (based on the bearer token) favorit movie url. Need Authorization
+Used to get all current user (based on the bearer token) favorit movie url. Need Authorization. The response will be strings of all of the urls seperated by a coma. If the movie poster is not found, the link will be equal to Not Found.
 
 Expected response:
-    Currently it only works in the server console, still in progress
+```JSON
+{
+    "links":"{LINK1,LINK2,....}"
+}
+```
 
 #### Post('/api/login')
 Used to login and get auth bearer token. Do not need Authorization.
