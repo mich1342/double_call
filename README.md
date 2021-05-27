@@ -29,6 +29,8 @@ Example: GET('/') => Get request with "localhost/3000/test" url.
 
 You might need to adjust your host and port accordingly.
 
+To set the bearer key, set 'Authorization' header to format 'bearer {YOUR KEY}'
+
 ### Get Method
 
 #### Get('/')
@@ -39,4 +41,92 @@ Expected response:
     {
         "test":"test1111"
     }
+```
+
+#### Get('/user/all')
+Used to get all user data in database (for testing purposes only). Need Authorization.
+
+Typical expected response:
+```JSON
+[
+    {
+        "id": "{User ID 1}",
+        "name": "{Username 1}",
+        "password": "{Hashed User Password 1}",
+        "createdAt": "{User 1 Create time}",
+        "updatedAt": "{User 1 Last Updata}"
+    },
+    {
+        "id": "{User ID 2}",
+        "name": "{Username 2}",
+        "password": "{Hashed User Password 2}",
+        "createdAt": "{User 2 Create time}",
+        "updatedAt": "{User 2 Last Updata}"
+    },
+]
+```
+#### Get('/movies/{YOUR MOVIE TITLE')
+Used to get specific movie poster url from OMDB api based on the title you inputed. Do not need Authorization.
+
+Expected response:
+    The poster url if the movie found.
+
+#### Get('/movies')
+Forbiden
+
+#### Get('/movie/favorite')
+Used to get all current user (based on the bearer token) favorit movie url. Need Authorization
+
+Expected response:
+    Currently it only works in the server console, still in progress
+
+#### Post('/api/login')
+Used to login and get auth bearer token. Do not need Authorization.
+
+Expected request body:
+```JSON
+{
+    "name": "{USERNAME}",
+    "password": "{PASSWORD}"
+}
+```
+
+Expected response:
+```JSON
+{
+    "token": "{YOUR TOKEN}"
+}
+```
+
+#### Post('/movies/favorite')
+Used to add new movie title to your favorite list. Need Authorization.
+
+Expected request body:
+```JSON
+{
+    "title":"{YOUR MOVIE TITLE}"
+    
+}
+```
+
+Expected response:
+```JSON
+{
+    "id": {Movie ID},
+    "title": "{Movie Title}",
+    "user_id": {User ID},
+    "updatedAt": "{Last Update Time}",
+    "createdAt": "{Creation Time}"
+}
+```
+
+#### Post('/user/new')
+Used to add a new user to the database. Do not need Authorization.
+
+Expected request body:
+```JSON
+{
+    "name":"{Username}",
+    "password":"{password}"
+}
 ```
