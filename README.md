@@ -23,4 +23,20 @@ npm run dev
 
 ## API request list
 
+all commands below based on the 'host/port/' url.
 
+Example: GET('/') => Get request with "localhost/3000/test" url.
+
+You might need to adjust your host and port accordingly.
+
+### Get Method
+
+#### Get('/')
+Used to check the connection between the postman app and the server. No need any headers or auth.
+
+Expected response:
+```JSON
+    {
+        "test":"test1111"
+    }
+```
