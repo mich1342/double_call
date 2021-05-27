@@ -113,6 +113,7 @@ router.get('/movie/favorite', verifyToken, (req, res, next) =>{
                         res.json({
                             links:AllMovies
                         }) 
+                        logger.info('Result all user favourite', res);
                     }));
                 
             });
@@ -133,36 +134,6 @@ router.get('/testTitle', (req,res,next) =>{
 
 });
 
-//USer login to get Auth token without hash
-router.post("/api/login/noHash", (req, res) =>{
-    logger.info('Request Login', req);
-    //console.log('Step1');
-    const username = req.body.name;
-    const password = req.body.password;
-    console.log(username);
-    db.user.findOne({where:{name: username}}).then((users)=>{
-        const db_password = users.password;
-        console.log(db_password);
-        console.log(password);
-        if(db_password === password){
-            jwt.sign({user:users}, 'secretkey', (err, token)=>{
-                res.json({
-                    token:token
-                });    
-            });
-        }else{
-            console.log('wrong password');
-            res.sendStatus(403).send('Wrong Password');
-        }
-    })
-    .catch((err)=>{
-        console.error(err);
-        logger.error(err);
-    });
-    
-    
-    
-});
 
 //User login to get Auth token with hash
 router.post("/api/login", (req, res) =>{
