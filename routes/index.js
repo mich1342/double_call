@@ -42,7 +42,8 @@ router.get('/movies/:Title', (req,res,next) =>{
     logger.info('Request Get Specific URL', req);
     const movieTitle = req.params.Title;
     //console.log(movieTitle);
-    const newTitle = movieTitle.split(' ').join('+');
+    //const newTitle = movieTitle.split(' ').join('+');
+    const newTitle = movieTitle;
     //console.log(newTitle);
     axios.get("https://www.omdbapi.com/?t="+ newTitle +"&apikey=" + process.env.OMDB_AUTH)
         .then((response) => {
@@ -61,87 +62,66 @@ router.get('/movies', (req,res,next) =>{
     logger.info('Result Forbidden Routes', res);
 });
 
-//Get all users favourite movies URL
-router.get('/movie/favorite', verifyToken, (req, res, next) =>{
-    logger.info('Request User Fav Movies URL', req);
-    jwt.verify(req.token, 'secretkey', (err, authData) =>{
-        if(err){
-            res.sendStatus(403);
-        } else{
-            db.favourite_movie.findAll({where:{user_id: authData.user.id}}).then(favourite_movie => {
-                var AllMovies = '';
-                var i = 0;
-                let currentLink = [];
-                while(i>-1){
-                    try{
-                        const currentTitle = favourite_movie[i].dataValues.title;
-                        const currentTitleFormated = currentTitle.split(' ').join('+'); 
-                        console.log(currentTitleFormated);
-                        currentLink.push("https://www.omdbapi.com/?t=" + currentTitleFormated + "&apikey=" + process.env.OMDB_AUTH);
-                        console.log(currentLink);
-                        axios.get(currentLink)
-                        .then((response) => {
-                            const currentPoster = String(response.data.Poster);
-                            console.log(currentPoster);
-                            AllMovies = AllMovies + currentPoster + ', ';
-                                
-
-                        }).catch(console.error);
-                        i++;
-                    } catch(err){
-                        break;
-                    }
-                   
-                }
-                    
-                console.log('final Data');
-                console.log(AllMovies);
-                
-                
-            });            
-        }
-    });  
-    
-});
-
 //Get all users favourite movies URL New
-router.get('/movie/favorite/new', verifyToken, (req, res, next) =>{
+router.get('/movie/favorite', verifyToken, (req, res, next) =>{
+    var AllMovies = '';
     logger.info('Request User Fav Movies URL', req);
     jwt.verify(req.token, 'secretkey', (err, authData) =>{
         if(err){
             res.sendStatus(403);
         } else{
             db.favourite_movie.findAll({where:{user_id: authData.user.id}}).then(favourite_movie => {
-                var AllMovies = '';
+               
                 var i = 0;
                 let currentLink = [];
                 while(i>-1){
                     try{
                         const currentTitle = favourite_movie[i].dataValues.title;
-                        const currentTitleFormated = currentTitle.split(' ').join('+'); 
+                        const currentTitleFormated = currentTitle; 
                         console.log(currentTitleFormated);
                         currentLink.push("https://www.omdbapi.com/?t=" + currentTitleFormated + "&apikey=" + process.env.OMDB_AUTH);
-                        console.log(currentLink);
-                        axios.get(currentLink)
-                        .then((response) => {
-                            const currentPoster = String(response.data.Poster);
-                            console.log(currentPoster);
-                            AllMovies = AllMovies + currentPoster + ', ';
-                                
-                            i++;
-                        }).catch(console.error);
-                        
+                                               
                     } catch(err){
                         break;
                     }
-                   
+                    i++;                   
                 }
-                    
+                 
                 console.log('final Data');
-                console.log(AllMovies);
+                console.log(currentLink);
+                axios.all(currentLink.map(l => axios.get(l)))
+                    .then(axios.spread(function(...out){
+                        var j = 0;
+                        
+                        while(j>-1){
+                            try{
+                                
+                                const currentResult = String(out[j].data.Response);
+                                if (currentResult === "False"){
+                                    AllMovies+='Not Found,';
+                                    console.log(notFound);
+                                } else{
+                                    Allmovies += String(out[j].data.Poster) + ', ';
+                                    console.log(out[j]);
+                                }
+                                
+                            }
+                            catch{
+                                break;
+                            }
+                            j++;
+                        }
+
+                        const finalAllMovies = AllMovies.slice(0,-1);
+                        console.log(AllMovies);
+
+                        res.json({
+                            links:finalAllMovies
+                        }) 
+                    }));
                 
+            });
                 
-            });            
         }
     });  
     
