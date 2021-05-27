@@ -112,7 +112,7 @@ router.get('/movie/favorite', verifyToken, (req, res, next) =>{
                             j++;
                         }
 
-                        const finalAllMovies = AllMovies.slice(0,-1);
+                        //const finalAllMovies = AllMovies.slice(0,-1);
                         console.log(AllMovies);
 
                         res.json({
