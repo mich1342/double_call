@@ -31,6 +31,8 @@ You might need to adjust your host and port accordingly.
 
 To set the bearer key, set 'Authorization' header to format 'bearer {YOUR KEY}'
 
+Every json data with curly bracket (ex. : "{username}") means the username data in strings. Data with square bracket (ex. : [user_id]) means the user_id is in integer or number. You should handle it as 1 instead of "1" in the body part of the request.
+
 ### Get Method
 
 #### Get('/')
@@ -50,14 +52,14 @@ Typical expected response:
 ```JSON
 [
     {
-        "id": "{User ID 1}",
+        "id": "[User ID 1]",
         "name": "{Username 1}",
         "password": "{Hashed User Password 1}",
         "createdAt": "{User 1 Create time}",
         "updatedAt": "{User 1 Last Updata}"
     },
     {
-        "id": "{User ID 2}",
+        "id": "[User ID 2]",
         "name": "{Username 2}",
         "password": "{Hashed User Password 2}",
         "createdAt": "{User 2 Create time}",
@@ -112,9 +114,9 @@ Expected request body:
 Expected response:
 ```JSON
 {
-    "id": {Movie ID},
+    "id": "[Movie ID]",
     "title": "{Movie Title}",
-    "user_id": {User ID},
+    "user_id": "[User ID]",
     "updatedAt": "{Last Update Time}",
     "createdAt": "{Creation Time}"
 }
@@ -128,5 +130,16 @@ Expected request body:
 {
     "name":"{Username}",
     "password":"{password}"
+}
+```
+
+Expected response body:
+```JSON
+{
+    "id": "[user_id]",
+    "name": "{username}",
+    "password": "{password}",
+    "updatedAt": "{Last update time}",
+    "createdAt": "{Creation time}"
 }
 ```
