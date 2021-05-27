@@ -110,8 +110,9 @@ router.get('/movie/favorite', verifyToken, (req, res, next) =>{
                             }
                             j++;
                         }
+                        const finalAllMovies = AllMovies.slice(0,-2);
                         res.json({
-                            links:AllMovies
+                            links:finalAllMovies
                         }) 
                         logger.info('Result all user favourite', res);
                     }));
